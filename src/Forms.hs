@@ -1,6 +1,8 @@
 module Forms where
 {- Various datastructures to represent different forms -}
 
+import Tables
+
 {- Wages and taxes, rounded to nearest dollar -}
 data FormW2 = Wage {income :: Int, federalTaxes :: Int, stateTaxes :: Int}
      deriving Show
@@ -14,8 +16,30 @@ data PreviousReturn = Return { amount :: Int }
      deriving Show
 
 {- 1040NR-EZ tax form -}
-data Form1040NREZ = NREZ { tax :: Int }
+data Form1040NREZ = NREZ {
+    wages :: Int,
+    refunds :: Int,
+    totalIncome :: Int,
+    adjustedIncome :: Int,
+    deductions :: Int,
+    exemption :: Int,
+    taxableIncome :: Int,
+    tax :: Int,
+    incomeTaxWithheld :: Int,
+    refund :: Int
+  } deriving Show
 
 {- Calculate fields in 1040NR-EZ based on the two input forms -}
-calculate1040NREZ :: FormW2 -> PreviousReturn -> Form1040NREZ
-calculate1040NREZ w2 ret = (NREZ 0)
+calculate1040NREZ :: MaritalStatus -> FormW2 -> PreviousReturn -> Form1040NREZ
+calculate1040NREZ ms (Wage inc fed state) (Return ret) =
+    (NREZ inc ret totInc adjInc deduct exempt txInc tx txWh ref)
+        where totInc = (inc + ret)
+              adjInc = totInc
+              deduct = state
+              exempt = 3900
+              txInc  = if (txInc' > 0) then txInc else 0
+              tx     = getFedIncomeTax txInc ms
+              txWh   = fed
+              ref    = (txWh - tx)
+              txInc' = (adjInc - deduct - exempt)
+

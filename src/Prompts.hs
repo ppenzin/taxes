@@ -2,6 +2,16 @@ module Prompts where
 {- Command-line prompts to enter data -}
 
 import Forms
+import Tables
+
+{- Prompt for marital status -}
+promptMaritalStatus :: IO MaritalStatus
+promptMaritalStatus = putStrLn "Are you filing as single or married (filing separately)?"
+                    >> getLine
+                    >>= (\str -> case str of 
+                             "single" -> return Single
+                             "married" -> return Married
+                             _         -> (putStrLn ("Invalid input") >> promptMaritalStatus))
 
 {- Prompt user for W-2 form input -}
 promptW2 :: IO FormW2
