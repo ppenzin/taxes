@@ -1,4 +1,4 @@
-module TaxesCmd where
+module Main where
 {- Command-line interface for tax calculator -}
 
 import Forms
