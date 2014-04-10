@@ -10,3 +10,4 @@ data MaritalStatus = Married | Single
 -- http://www.irs.gov/instructions/i1040nre/ar02.html
 getFedIncomeTax :: Int -> MaritalStatus -> Int
 getFedIncomeTax inc ms = undefined
+
