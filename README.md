@@ -10,3 +10,6 @@ Work in progress, use at your own risk.
 www.irs.gov/pub/irs-pdf/i1040nre.pdf
 www.irs.gov/instructions/i1040nre/
 
+# TODO
+* Finish cabal instructions
+* Implement loading tax tables from a file
