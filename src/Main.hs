@@ -1,8 +1,11 @@
 module Main where
 {- Command-line interface for tax calculator -}
 
+import System.IO
+
 import Forms
 import Prompts
+import Tables
 
 {- Simple yes/no prompt -}
 yesno :: String -> IO Bool
@@ -24,8 +27,13 @@ getStateTaxReturn = yesno "Did you receive a state tax return last year?"
                   >>= \yes -> if yes then promptPreviousReturn else return(Return 0)
 
 {- Start with zero values -}
-main = (getAllWages (Wage 0 0 0))
+main = putStr "Loading tax tables ... "
+     >> openFile "tables/table1040NR-EZ.txt" ReadMode
+     >>= \inh -> readTaxTable inh
+     >>= \tt -> putStrLn "done"
+     >> (getAllWages (Wage 0 0 0))
      >>= \w2 -> getStateTaxReturn
      >>= \ret -> promptMaritalStatus
-     >>= \ms -> print(calculate1040NREZ ms w2 ret)
+     >>= \ms -> print(calculate1040NREZ tt ms w2 ret)
+     >> hClose inh
 

@@ -34,13 +34,22 @@ produceTuple [a, b, c, d] = (ai, bi, ci, di)
                         di = read d
 
 {- Find one's tax in a tax table
- - TODO add checks for the list to be accending and starting with 0
+ - checking that the list is continuous (beginning of the next interval is
+ - ending of the previous)
  -}
 findTax :: Int -> MaritalStatus -> [(Int, Int, Int, Int)] -> Maybe Int
 findTax inc ms []     = Nothing
-findTax inc ms (t:ts) = if (inc >= begin && inc < end) then Just (getVal ms m s) else findTax inc ms ts
+findTax inc ms (t:ts) | end <= begin = error "Interval end should be greater than beginning"
+                  where (begin, end, _, _) = t
+findTax inc ms (t:u:ts) | end /= next = error "Tax table has gaps"
+                  where (_, end, _, _) = t
+                        (next, _, _, _) = u
+findTax inc ms (t:ts) | inc < begin = Nothing
+                  where (begin, end, m, s) = t
+findTax inc ms (t:ts) | inc < end = Just (getVal ms m s)
                   where (begin, end, m, s) = t
                         getVal ms m s = if ms == Single then s else m
+findTax inc ms (t:ts) | otherwise  = findTax inc ms ts
 
 test1 = openFile "table.txt" ReadMode
     >>= readTaxTable
