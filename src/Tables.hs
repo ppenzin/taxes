@@ -51,15 +51,19 @@ findTax inc ms (t:ts) | inc < end = Just (getVal ms m s)
                         getVal ms m s = if ms == Single then s else m
 findTax inc ms (t:ts) | otherwise  = findTax inc ms ts
 
-test1 = openFile "table.txt" ReadMode
+test1 = openFile "tables/table1040NR-EZ.txt" ReadMode
     >>= readTaxTable
     >>= \t -> print (findTax 47221 Single t)
 
-test2 = openFile "table.txt" ReadMode
+test2 = openFile "tables/table1040NR-EZ.txt" ReadMode
     >>= readTaxTable
     >>= \t -> print (findTax (-1) Single t)
 
-test3 = openFile "table.txt" ReadMode
+test3 = openFile "tables/table1040NR-EZ.txt" ReadMode
     >>= readTaxTable
     >>= \t -> print (findTax 200000 Single t)
+
+test4 = openFile "tables/table1040NR-EZ.txt" ReadMode
+    >>= readTaxTable
+    >>= \t -> print (findTax 80000 Single t)
 
