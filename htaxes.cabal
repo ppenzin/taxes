@@ -44,6 +44,8 @@ build-type:          Simple
 -- Constraint on the version of Cabal needed to build this package.
 cabal-version:       >=1.8
 
+-- Tax table files
+data-files:          resources/tables/table1040NR-EZ.txt
 
 executable htaxes
   -- source derectory
@@ -53,7 +55,7 @@ executable htaxes
   main-is:             Main.hs
   
   -- Modules included in this executable, other than Main.
-  other-modules:       Tables Forms Prompts
+  other-modules:       Tables Forms Prompts Paths_htaxes
   
   -- Other library packages from which modules are imported.
   build-depends:       base ==4.6.*

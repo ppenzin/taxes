@@ -6,6 +6,8 @@ import System.IO
 import Forms
 import Prompts
 import Tables
+-- Paths to data files, managed by Cabal
+import Paths_htaxes
 
 {- Simple yes/no prompt -}
 yesno :: String -> IO Bool
@@ -28,7 +30,8 @@ getStateTaxReturn = yesno "Did you receive a state tax return last year?"
 
 {- Start with zero values -}
 main = putStr "Loading tax tables ... "
-     >> openFile "tables/table1040NR-EZ.txt" ReadMode
+     >> getDataFileName "resources/tables/table1040NR-EZ.txt"
+     >>= \path -> openFile path ReadMode
      >>= \inh -> readTaxTable inh
      >>= \tt -> putStrLn "done"
      >> (getAllWages (Wage 0 0 0))
