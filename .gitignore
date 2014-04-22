@@ -5,6 +5,7 @@ cabal-dev
 *.chi
 *.chs.h
 *.core
+*.swp
 .virtualenv
 .hsenv
 .cabal-sandbox/
