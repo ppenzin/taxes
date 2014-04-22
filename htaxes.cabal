@@ -31,4 +31,4 @@ Test-suite test-all
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
   main-is:             test-all.hs
-  build-depends:       base, quickcheck
+  build-depends:       base, QuickCheck
