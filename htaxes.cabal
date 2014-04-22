@@ -47,7 +47,7 @@ cabal-version:       >=1.8
 -- Tax table files
 data-files:          resources/tables/table1040NR-EZ.txt
 
-executable htaxes
+Executable htaxes
   -- source derectory
   hs-source-dirs:      src
 
@@ -60,3 +60,8 @@ executable htaxes
   -- Other library packages from which modules are imported.
   build-depends:       base
   
+Test-suite test-all
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      test
+  main-is:             test-all.hs
+  build-depends:       base
